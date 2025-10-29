@@ -27,9 +27,18 @@
           console.error("Error loading Embedded Messaging: ", err);
         }
       }
-      </script>
+      
 
-      <script type='text/javascript' src='https://arrowcrm--mergeuat.sandbox.my.site.com/ESWBotService1756717818662/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'>
-      </script>
+      window.addEventListener("load", function () {
+      setTimeout(() => {
+        const script = document.createElement("script");
+        script.src = "https://arrowcrm--mergeuat.sandbox.my.site.com/ESWBotService1756717818662/assets/js/bootstrap.min.js";
+        script.onload = initEmbeddedMessaging;
+        document.body.appendChild(script);
+      }, 1000); // delay by 1s
+    });
+
+    </script>
   </body>
 </html>
+

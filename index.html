@@ -15,43 +15,57 @@
           embeddedservice_bootstrap.settings.language = "en_US";
 
           embeddedservice_bootstrap.init(
-            "00DWr000005lheX",
-            "Bot_Service",
+            "00DWr000005lheX", // Org Id
+            "Bot_Service", // Deployment Name
             "https://arrowcrm--mergeuat.sandbox.my.site.com/ESWBotService1756717818662",
             {
               scrt2URL:
                 "https://arrowcrm--mergeuat.sandbox.my.salesforce-scrt.com",
             }
           );
-			 // ✅ Add listener for conversation ended event
-        window.addEventListener("onConversationEnded", function(event) {
-            console.log("Chat Ended:", event);
 
-            // 🔹 Extract Messaging Session ID from event
-            const sessionId = event?.detail?.recordId;
+          // Wait for the messaging runtime to fully load before listening
+          embeddedservice_bootstrap.addEventHandler(
+            "onEmbeddedMessagingReady",
+            function () {
+              console.log("Enhanced Messaging is ready.");
 
-            if (sessionId) {
-                console.log("Session ID:", sessionId);
-                // Redirect to survey page and pass session ID
-                window.open(
-                    `https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage?sessionId=${sessionId}`,
-                    "_blank"
-                );
-            } else {
-                console.warn("No session ID found in event payload.");
-                window.open("https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage", "_blank");
+              // Now attach conversation end event listener
+              embeddedservice_bootstrap.addEventHandler(
+                "onConversationEnded",
+                function (event) {
+                  console.log("💬 Chat Ended Event:", event);
+
+                  const sessionId = event?.data?.recordId; // Correct path in enhanced bot
+
+                  if (sessionId) {
+                    console.log("Session ID:", sessionId);
+                    window.open(
+                      `https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage?sessionId=${sessionId}`,
+                      "_blank"
+                    );
+                  } else {
+                    console.warn("No session ID found. Opening survey directly.");
+                    window.open(
+                      "https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage",
+                      "_blank"
+                    );
+                  }
+                }
+              );
             }
-        });
+          );
         } catch (err) {
           console.error("Error loading Embedded Messaging: ", err);
         }
       }
     </script>
 
-    <script type='text/javascript' 
-	  src='https://arrowcrm--mergeuat.sandbox.my.site.com/ESWBotService1756717818662/assets/js/bootstrap.min.js' defer onload='initEmbeddedMessaging()'>
-	  </script>
+    <script
+      type="text/javascript"
+      src="https://arrowcrm--mergeuat.sandbox.my.site.com/ESWBotService1756717818662/assets/js/bootstrap.min.js"
+      defer
+      onload="initEmbeddedMessaging()"
+    ></script>
   </body>
 </html>
-
-

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RFPD Enhanced Bot</title>
+  </head>
+
+  <body>
+    <header>Welcome to RFPD Support Bot</header>
+
+    <script type="text/javascript">
+      function initEmbeddedMessaging() {
+        try {
+          embeddedservice_bootstrap.settings.language = "en_US";
+
+          embeddedservice_bootstrap.init(
+            "00DWr000005lheX",
+            "Bot_Service",
+            "https://arrowcrm--mergeuat.sandbox.my.site.com/ESWBotService1756717818662",
+            {
+              scrt2URL:
+                "https://arrowcrm--mergeuat.sandbox.my.salesforce-scrt.com",
+            }
+          );
+        } catch (err) {
+          console.error("Error loading Embedded Messaging: ", err);
+        }
+      }
+      </script>
+
+      <script type='text/javascript' src='https://arrowcrm--mergeuat.sandbox.my.site.com/ESWBotService1756717818662/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'>
+      </script>
+  </body>
+</html>

@@ -23,38 +23,6 @@
                 "https://arrowcrm--mergeuat.sandbox.my.salesforce-scrt.com",
             }
           );
-
-          // Wait for the messaging runtime to fully load before listening
-          embeddedservice_bootstrap.addEventHandler(
-            "onEmbeddedMessagingReady",
-            function () {
-              console.log("Enhanced Messaging is ready.");
-
-              // Now attach conversation end event listener
-              embeddedservice_bootstrap.addEventHandler(
-                "onConversationEnded",
-                function (event) {
-                  console.log("💬 Chat Ended Event:", event);
-
-                  const sessionId = event?.data?.recordId; // Correct path in enhanced bot
-
-                  if (sessionId) {
-                    console.log("Session ID:", sessionId);
-                    window.open(
-                      `https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage?sessionId=${sessionId}`,
-                      "_blank"
-                    );
-                  } else {
-                    console.warn("No session ID found. Opening survey directly.");
-                    window.open(
-                      "https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage",
-                      "_blank"
-                    );
-                  }
-                }
-              );
-            }
-          );
         } catch (err) {
           console.error("Error loading Embedded Messaging: ", err);
         }
@@ -69,3 +37,4 @@
     ></script>
   </body>
 </html>
+

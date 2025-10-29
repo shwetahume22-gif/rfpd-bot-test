@@ -23,6 +23,25 @@
                 "https://arrowcrm--mergeuat.sandbox.my.salesforce-scrt.com",
             }
           );
+			 // ✅ Add listener for conversation ended event
+        window.addEventListener("onConversationEnded", function(event) {
+            console.log("Chat Ended:", event);
+
+            // 🔹 Extract Messaging Session ID from event
+            const sessionId = event?.detail?.recordId;
+
+            if (sessionId) {
+                console.log("Session ID:", sessionId);
+                // Redirect to survey page and pass session ID
+                window.open(
+                    `https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage?sessionId=${sessionId}`,
+                    "_blank"
+                );
+            } else {
+                console.warn("No session ID found in event payload.");
+                window.open("https://arrow.secure.force.com/rfpdchatsurvey/apex/RFPDSurveyPage", "_blank");
+            }
+        });
         } catch (err) {
           console.error("Error loading Embedded Messaging: ", err);
         }
@@ -34,4 +53,5 @@
 	  </script>
   </body>
 </html>
+
 
